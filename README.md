@@ -78,18 +78,57 @@ def vectorised_cost_function(x, y, w, b):
     return total_cost
  ```   
 
- The cost function is defined as:
+## Cost Function Formula
+The cost function is defined as:
 
- 
+
+$$
+J(w, b) = \frac{1}{2n} \sum_{i=1}^{n} (y_i - (w \cdot x_i + b))^2
+$$
 
 
-where:
+where:  
+- w is the weight (slope)  
+- b  is the bias (intercept)  
+-  $$x_i , y_i$$  are the feature and target values  
+-  n is the number of samples  
 
-w  is the weight (slope)
+## Gradient Descent
+Gradient Descent minimizes the cost function by updating the weight and bias values iteratively:
 
-b  is the bias (intercept)
-x_i  and ( y_i ) are the features and target values
-n  is the number of samples
+$$
+w = w - \alpha \cdot \frac{\partial J}{\partial w}
+$$
+
+$$
+b = b - \alpha \cdot \frac{\partial J}{\partial b}
+$$
+
+where:  
+- <p> α is the learning rate </p>
+
+
+
+### Gradient Descent function:
+```python
+def gradient_descent(x, y, w, b, a, iterations):
+    w_history = []
+    b_history = []
+    cost_history = []
+
+    for i in range(iterations):
+        dw = -(2/n) * np.sum((y - (w*x + b)) * x)
+        db = -(2/n) * np.sum(y - (w*x + b))
+
+        w_history.append(w)
+        b_history.append(b)
+        cost_history.append(vectorised_cost_function(x, y, w, b))
+
+        w = w - a * dw
+        b = b - a * db
+
+    return w, b, w_history, b_history, cost_history
+```
 ## Visualization
 
 To better understand how the model performs, the following visualizations are included:
